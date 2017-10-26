@@ -4,7 +4,7 @@ import (
    
 	"net/http"
 	"strconv"
-	"time"
+	//"time"
 	"text/template"
 )
 
@@ -32,7 +32,7 @@ func templateHandler(w http.ResponseWriter, r *http.Request){
 		cookie = &http.Cookie{
 			Name:    "count",
 			Value:   strconv.Itoa(count),
-			Expires: time.Now().Add(72 * time.Hour),
+			//Expires: time.Now().Add(72 * time.Hour),
 		}
 		http.SetCookie(w, cookie)
 	
