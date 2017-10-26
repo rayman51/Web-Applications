@@ -14,11 +14,12 @@
     <h2>{{.Message}}</h2>
     
     <br><br>
-    <form action="/guess">
-      <input type="text" name="guess">
+    <form action="/guess" method ="GET">
+      <input type="text" name="guess" >
       <br><br>
       <input type="submit" value="Guess">
     </form>
+    <h2>you have visited this page {{.Count}} times</h2>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="/js/jquery-3.2.1.slim.min.js"></script>
