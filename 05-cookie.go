@@ -22,7 +22,7 @@ func templateHandler(w http.ResponseWriter, r *http.Request){
 	
 	message :="Guess a number between 1 and 20"
 	    rand.Seed(time.Now().UTC().UnixNano())
-		target:=rand.Intn(20-1)
+		target:=rand.Intn(20-1)// picks a number between 1 and 20
 		var cookie, err = r.Cookie("target")
 		if err == nil {
 			// If we could read it, try to convert its value to an int.
@@ -34,8 +34,8 @@ func templateHandler(w http.ResponseWriter, r *http.Request){
 		if Guess == target{
 			message ="Congrats "+strconv.Itoa(Guess)+" was the answer"
 		}else if Guess < target{
-		   message="Try Again your guess  was  too low"
-		}else {
+		   message="Try Again your guess  was  too low"// checks guess sent 
+		}else {										  //  from the form
 			message="Try Again your guess was too high"
 		 }
 
@@ -56,9 +56,9 @@ func templateHandler(w http.ResponseWriter, r *http.Request){
 func main() {
 	
 	
-	http.Handle("/", http.FileServer(http.Dir("./static")))
+	http.Handle("/", http.FileServer(http.Dir("./static")))// used when index is called 
 	
-	http.HandleFunc("/guess", templateHandler)
+	http.HandleFunc("/guess", templateHandler)// used when temp is called
 
     http.ListenAndServe(":8080", nil)
 }
