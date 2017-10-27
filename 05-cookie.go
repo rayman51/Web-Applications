@@ -3,44 +3,53 @@ package main
 import (
    
 	"net/http"
-	"strconv"
-	//"time"
+	"strconv"// imports 
+	"time"  // used
 	"text/template"
+	"math/rand"
 )
 
 type Templatedata struct{
 	Message string
-	Count int
+	//Count int
+	Guess int
+
 }
 
 
+
 func templateHandler(w http.ResponseWriter, r *http.Request){
-	count := 0
 	
-		// Try to read the cookie.
-		var cookie, err = r.Cookie("count")
+	message :="Guess a number between 1 and 20"
+	    rand.Seed(time.Now().UTC().UnixNano())
+		target:=rand.Intn(20-1)
+		var cookie, err = r.Cookie("target")
 		if err == nil {
 			// If we could read it, try to convert its value to an int.
-			count, _ = strconv.Atoi(cookie.Value)
+			target, _ = strconv.Atoi(cookie.Value)
 		}
 	
-		// Increase count by 1 either way.
-		count += 1
-	
-		// Create a cookie instance and set the cookie.
-		// You can delete the Expires line (and the time import) to make a session cookie.
+		Guess,_ := strconv.Atoi(r.FormValue("guess"))
+
+		if Guess == target{
+			message ="Congrats "+strconv.Itoa(Guess)+" was the answer"
+		}else if Guess < target{
+		   message="Try Again your guess  was  too low"
+		}else {
+			message="Try Again your guess was too high"
+		 }
+
 		cookie = &http.Cookie{
-			Name:    "count",
-			Value:   strconv.Itoa(count),
-			//Expires: time.Now().Add(72 * time.Hour),
+			Name:    "target",
+			Value:   strconv.Itoa(target),
+			Expires: time.Now().Add(72 * time.Hour),
 		}
-		http.SetCookie(w, cookie)
+		http.SetCookie(w, cookie)// set cookie
 	
-		// Use a template to display out how many requests have been made.
 		
-		
-	 t, _ := template.ParseFiles("template/guess.html")
-	 t.Execute(w, Templatedata {Message: "Guess a number between 1 and 20", Count: count} )
+			
+	 t, _ := template.ParseFiles("template/guess.html")// parses file
+	 t.Execute(w, &Templatedata {Message:message, Guess:Guess})// sends data to html file
 	
 }
 
