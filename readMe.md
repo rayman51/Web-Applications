@@ -19,8 +19,6 @@ Alternatively you can type localhost8080/guess, to go straight to the game.
 
 On this page you will find a form. This allows the user to enter a number between 1 and 20. Once submitted, there guess is sent back to the program and a message is passed to the html file telling the user if the number is too high, too low or the right number.
 
-![alt tag](https://github.com/rayman51/data-rep-go-problems/blob/master/images/goCap.PNG)
-
 ## Problems set
 1. Guessing game
 
